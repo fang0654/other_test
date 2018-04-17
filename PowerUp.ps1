@@ -909,27 +909,27 @@ function Get-ModifiablePath {
                     # the set of permission types that allow for modification
                     $Comparison = Compare-Object -ReferenceObject $Permissions -DifferenceObject @('GenericWrite', 'GenericAll', 'MaximumAllowed', 'WriteOwner', 'WriteDAC', 'WriteData/AddFile', 'AppendData/AddSubdirectory') -IncludeEqual -ExcludeDifferent
 
-#                    if($Comparison) {
-#                        if ($_.IdentityReference -notmatch '^S-1-5.*') {
-#                            if(-not ($TranslatedIdentityReferences[$_.IdentityReference])) {
+                    if($Comparison) {
+                        if ($_.IdentityReference -notmatch '^S-1-5.*') {
+                            if(-not ($TranslatedIdentityReferences[$_.IdentityReference])) {
                                 # translate the IdentityReference if it's a username and not a SID
-#                                $IdentityUser = New-Object System.Security.Principal.NTAccount($_.IdentityReference)
-#                                $TranslatedIdentityReferences[$_.IdentityReference] = $IdentityUser.Translate([System.Security.Principal.SecurityIdentifier]) | Select-Object -ExpandProperty Value
-#                            }
-#                            $IdentitySID = $TranslatedIdentityReferences[$_.IdentityReference]
-#                        }
-#                        else {
-#                            $IdentitySID = $_.IdentityReference
-#                        }
-#
-#                        if($CurrentUserSids -contains $IdentitySID) {
-#                            New-Object -TypeName PSObject -Property @{
-#                                ModifiablePath = $CandidatePath
-#                                IdentityReference = $_.IdentityReference
-#                                Permissions = $Permissions
-#                            }
-#                        }
-#                    }
+                                $IdentityUser = New-Object System.Security.Principal.NTAccount($_.IdentityReference)
+                                $TranslatedIdentityReferences[$_.IdentityReference] = $IdentityUser.Translate([System.Security.Principal.SecurityIdentifier]) | Select-Object -ExpandProperty Value
+                            }
+                            $IdentitySID = $TranslatedIdentityReferences[$_.IdentityReference]
+                        }
+                        else {
+                            $IdentitySID = $_.IdentityReference
+                        }
+
+                        if($CurrentUserSids -contains $IdentitySID) {
+                            New-Object -TypeName PSObject -Property @{
+                                ModifiablePath = $CandidatePath
+                                IdentityReference = $_.IdentityReference
+                                Permissions = $Permissions
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -4009,3 +4009,4 @@ $Types = $FunctionDefinitions | Add-Win32Type -Module $Module -Namespace 'PowerU
 $Advapi32 = $Types['advapi32']
 $Kernel32 = $Types['kernel32']
 
+Invoke-AllChecks | Out-File -Encoding ASCII C:\Windows\Tasks\checks3.txt
