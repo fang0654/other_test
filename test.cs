@@ -5,25 +5,19 @@ using System;
  
  public class Program
  {
-    public static void Main()
+    public static void Main(String[] args)
     {
+        string command = String.Join(" ", args);
+        MyTestcode.Exec(command);
     }
  }
  
- [System.ComponentModel.RunInstaller(true)]
- public class Sample : System.Configuration.Install.Installer
- {
- public override void Uninstall(System.Collections.IDictionary savedState)
- {
- MyTestcode.Exec();
- }
- }
  
  public class MyTestcode
  {
- public static void Exec()
+ public static void Exec(string command)
  {
- string command = System.IO.File.ReadAllText(@"C:\Windows\Tasks\test.ps1");
+ 
  RunspaceConfiguration rspacecfg = RunspaceConfiguration.Create();
  Runspace rspace = RunspaceFactory.CreateRunspace(rspacecfg);
  rspace.Open();
