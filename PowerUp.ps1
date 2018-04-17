@@ -4009,7 +4009,3 @@ $Types = $FunctionDefinitions | Add-Win32Type -Module $Module -Namespace 'PowerU
 $Advapi32 = $Types['advapi32']
 $Kernel32 = $Types['kernel32']
 
-Get-ServiceUnquoted | Out-File -Encoding ASCII checks1.txt
-Get-ModifiableServiceFile | Out-File -Encoding ASCII checks2.txt
-Get-ModifiableService | Out-File -Encoding ASCII checks3.txt
-Get-ServiceDetail | Out-File -Encoding ASCII checks4.txt
