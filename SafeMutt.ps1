@@ -19,10 +19,10 @@ function Invoke-SafeMutt{
     
     param(
         [String[]]
-        $CollectionMethod = [string[]] @('Default'),
+        $CollectionMethod = [string[]] @('Default')
 
 	)
-    
+
     $vars = New-Object System.Collections.Generic.List[System.Object]
 
     $vars.Add("-c")
