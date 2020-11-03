@@ -15,6 +15,7 @@ function Invoke-SafeMutt{
             Default - blah
             All - blah
 
+    #>
     
     param(
         [String[]]
