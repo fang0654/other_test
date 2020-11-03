@@ -41,6 +41,9 @@ function Invoke-SafeMutt{
 	$Assembly = [Reflection.Assembly]::Load($UncompressedFileBytes)
 	$BindingFlags = [Reflection.BindingFlags] "Public,Static"
 	$a = @()
-	$Assembly.GetType("Cos"+"tura.A"+"ssembl"+"yLo"+"ader", $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
-	$Assembly.GetType("Sh"+"arp"+"Hou"+"nd3"+".S"+"har"+"pHou"+"nd").GetMethod("Inv"+"okeS"+"harp"+"Hou"+"nd").Invoke($Null, @(,$passed))
+    $dd = "Cos"+"tura.A"+"ssembl"+"yLo"+"ader"
+    $de = "Sh"+"arp"+"Hou"+"nd3"+".S"+"har"+"pHou"+"nd"
+    $df = "Inv"+"okeS"+"harp"+"Hou"+"nd"
+	$Assembly.GetType($dd, $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
+	$Assembly.GetType($de).GetMethod($df).Invoke($Null, @(,$passed))
 }
