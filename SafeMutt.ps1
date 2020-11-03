@@ -21,7 +21,8 @@ function Invoke-SafeMutt{
         [String[]]
         $CollectionMethod = [string[]] @('Default'),
 
-	
+	)
+    
     $vars = New-Object System.Collections.Generic.List[System.Object]
 
     $vars.Add("-c")
