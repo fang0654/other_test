@@ -318,6 +318,6 @@ function Invoke-SafeMutt{
     $dd = "Cos"+"tura.A"+"ssembl"+"yLo"+"ader"
     $de = "Sh"+"arp"+"Hou"+"nd3"+".S"+"har"+"pHou"+"nd"
     $df = "Inv"+"okeS"+"harp"+"Hou"+"nd"
-	$Assembly.GetType($dd, $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
-	$Assembly.GetType($de).GetMethod($df).Invoke($Null, @(,$passed))
+	$Assembly.GetType("Costura.AssemblyLoader", $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
+	$Assembly.GetType("SharpHound3.SharpHound").GetMethod("InvokeSharpHound").Invoke($Null, @(,$passed))
 }
