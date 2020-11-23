@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/1.hl7">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
