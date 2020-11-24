@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///.autoconfig-170431851.txt">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
