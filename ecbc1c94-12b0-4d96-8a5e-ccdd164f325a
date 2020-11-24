@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///mnt/hgfs">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
