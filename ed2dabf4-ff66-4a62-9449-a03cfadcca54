@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/root/dirs/add_document_form-41320e0c20fe65f1ba335791dae39d32a7b89d80.jar">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
