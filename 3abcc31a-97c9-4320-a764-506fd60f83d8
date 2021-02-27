@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///.markerfile-47275652-8c5e-4299-bda1-0d30020d3c60.txt">
-<!ENTITY % ent "<!ENTITY data SYSTEM '%file;'>">

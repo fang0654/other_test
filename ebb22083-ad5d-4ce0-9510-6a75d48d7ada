@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/keystore.jks">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

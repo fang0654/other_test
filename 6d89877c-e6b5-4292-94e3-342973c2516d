@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///home/st049418">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

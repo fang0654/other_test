@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///opt/netapp/santools/sanlun">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

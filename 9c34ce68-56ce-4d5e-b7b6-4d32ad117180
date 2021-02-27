@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/deploy/">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

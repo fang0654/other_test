@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///opt/pdag/etc/wgetrc">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

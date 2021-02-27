@@ -1,5 +1,0 @@
-
-<!ENTITY % file SYSTEM "file:///opt/browsersoft/node/root/deployments/LACIE_CERT_13_7_9/cert_custom_mpi/match/matchConfigFile.cfg">
-<!ENTITY % start "<![CDATA[">
-<!ENTITY % end ">>
-<!ENTITY % all "<!ENTITY data SYSTEM '%start;%file;%end;'>">

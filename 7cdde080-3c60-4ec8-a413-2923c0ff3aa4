@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///etc/zabbix_agent.conf">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">

@@ -1,2 +1,0 @@
-<!ENTITY % file SYSTEM "file:///opt/browsersoft/releasenode/config.xml">
-<!ENTITY % ent "<!ENTITY data SYSTEM ':%file;'>">
